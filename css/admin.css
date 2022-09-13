@@ -1,0 +1,47 @@
+
+div#wpforms-panel-settings .lianamailer_wpforms .disabled {
+	cursor:not-allowed;
+}
+
+li#lianamailer-panel-tab .lianamailer-icon-in-circle {
+	display: inline-block;
+	vertical-align: text-top;
+	margin: 1px 6px 0;
+	padding: 0 5px;
+	min-width: 7px;
+	height: 17px;
+	border-radius: 11px;
+	background-color: #ca4a1f;
+	color: #fff;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 17px;
+	text-align: center;
+	z-index: 26;
+}
+
+div#lianamailer-panel .lianaMailerPluginSettings select.error {
+	border-color:#dc3232;
+}
+#wpforms-add-fields-lianamailer {
+	background:#fff;
+	color:black;
+}
+.fa.lianamailer::before {
+	content: ')(' !important;
+	font-style:italic;
+	font-weight: bold;
+	color:#2C700A;
+	height:100%;
+	font-size:1rem !important;
+
+}
+
+#wpforms-builder-form .lianamailer-error {
+	color:red;
+	margin-top:10px;
+}
+
+div#wpforms-panel-settings .lianamailer_wpforms select.error {
+	border-color:#dc3232;
+}
