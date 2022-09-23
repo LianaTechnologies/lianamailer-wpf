@@ -35,8 +35,6 @@ function plugins_loaded() {
 	// if WPForms is installed
 	if ( defined( 'WPFORMS_VERSION' ) ) {
 
-		//define('WPFORMS_DEBUG', true);
-		// TODO: Autoloader?
 		require_once dirname(__FILE__) . '/includes/Mailer/Rest.php';
 		require_once dirname(__FILE__) . '/includes/Mailer/LianaMailerConnection.php';
 

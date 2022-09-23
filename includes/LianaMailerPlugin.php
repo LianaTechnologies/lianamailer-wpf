@@ -299,7 +299,6 @@ class LianaMailerPlugin {
 		}
 
 		if(!$list_id) {
-			error_log('No mailing lists set');
 			return;
 		}
 
@@ -328,7 +327,6 @@ class LianaMailerPlugin {
 		}
 
 		if(empty($email) && empty($sms)) {
-			error_log('No email or SMS -field set');
 			return;
 		}
 
@@ -386,7 +384,6 @@ class LianaMailerPlugin {
 		}
 		catch(\Exception $e) {
 			$failure_reason = $e->getMessage();
-			error_log('Failure: '.$failure_reason);
 		}
 		return;
 	}
