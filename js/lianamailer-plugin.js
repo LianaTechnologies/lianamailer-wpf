@@ -7,7 +7,7 @@
  * @link     https://www.lianatech.com
  */
 
- jQuery( document ).ready(
+jQuery( document ).ready(
 	function($) {
 
 		var $enableCb               = $( '.wpforms-panel-content .lianamailer_wpforms input#wpforms-panel-field-lianamailer_settings-lianamailer_enabled' );
