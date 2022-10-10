@@ -204,7 +204,7 @@ class LianaMailerPlugin {
 	 * @return array LianaMailer site properties
 	 */
 	public function wpf_get_lianamailer_connection_status( $field ) {
-		return (self::$lianamailer_connection->get_status() ? true : false);
+		return ( self::$lianamailer_connection->get_status() ? true : false );
 	}
 
 	/**
