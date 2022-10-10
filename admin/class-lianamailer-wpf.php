@@ -10,7 +10,7 @@
  * @link     https://www.lianatech.com
  */
 
-namespace WPForms_LianaMailer;
+namespace WPF_LianaMailer;
 
 /**
  * LianaMailer / WPForms options panel class
@@ -20,13 +20,13 @@ namespace WPForms_LianaMailer;
  * @license  https://www.gnu.org/licenses/gpl-3.0-standalone.html GPL-3.0-or-later
  * @link     https://www.lianatech.com
  */
-class LianaMailerWPForms {
+class LianaMailer_WPF {
 	/**
 	 * REST API options to save
 	 *
-	 * @var lianamailer_wpforms_options array
+	 * @var lianamailer_wpf_options array
 	 */
-	private $lianamailer_wpforms_options = array(
+	private $lianamailer_wpf_options = array(
 		'lianamailer_userid'     => '',
 		'lianamailer_secret_key' => '',
 		'lianamailer_realm'      => '',
@@ -40,19 +40,19 @@ class LianaMailerWPForms {
 	public function __construct() {
 		add_action(
 			'admin_menu',
-			array( $this, 'lianamailer_wpforms_add_plugin_page' )
+			array( $this, 'lianamailer_wpf_add_plugin_page' )
 		);
 
 		add_action(
 			'admin_init',
-			array( $this, 'lianamailer_wp_forms_page_init' )
+			array( $this, 'lianamailer_wpf_page_init' )
 		);
 	}
 
 	/**
 	 * Add an admin page.
 	 */
-	public function lianamailer_wpforms_add_plugin_page() {
+	public function lianamailer_wpf_add_plugin_page() {
 		global $admin_page_hooks;
 
 		// Only create the top level menu if it doesn't exist (via another plugin).
@@ -62,7 +62,7 @@ class LianaMailerWPForms {
 				'LianaMailer',
 				'manage_options',
 				'lianamailer',
-				array( $this, 'lianamailer_wp_forms_create_admin_page' ),
+				array( $this, 'lianamailer_wpf_create_admin_page' ),
 				'dashicons-admin-settings',
 				65
 			);
@@ -72,8 +72,8 @@ class LianaMailerWPForms {
 			'WPForms',
 			'WPForms',
 			'manage_options',
-			'lianamailerwpforms',
-			array( $this, 'lianamailer_wp_forms_create_admin_page' )
+			'lianamailerwpf',
+			array( $this, 'lianamailer_wpf_create_admin_page' )
 		);
 
 		// Remove the duplicate of the top level menu item from the sub menu
@@ -86,8 +86,8 @@ class LianaMailerWPForms {
 	/**
 	 * Construct an admin page.
 	 */
-	public function lianamailer_wp_forms_create_admin_page() {
-		$this->lianamailer_wpforms_options = get_option( 'lianamailer_wpforms_options' );
+	public function lianamailer_wpf_create_admin_page() {
+		$this->lianamailer_wpf_options = get_option( 'lianamailer_wpf_options' );
 		?>
 
 		<div class="wrap">
@@ -95,8 +95,8 @@ class LianaMailerWPForms {
 		<?php settings_errors(); ?>
 		<form method="post" action="options.php">
 			<?php
-			settings_fields( 'lianamailer_wpforms_option_group' );
-			do_settings_sections( 'lianamailer_wpforms_admin' );
+			settings_fields( 'lianamailer_wpf_option_group' );
+			do_settings_sections( 'lianamailer_wpf_admin' );
 			submit_button();
 			?>
 		</form>
@@ -107,65 +107,65 @@ class LianaMailerWPForms {
 	/**
 	 * Init a WPForms admin page.
 	 */
-	public function lianamailer_wp_forms_page_init() {
+	public function lianamailer_wpf_page_init() {
 
-		$page    = 'lianamailer_wpforms_admin';
-		$section = 'lianamailer_wpforms_section';
+		$page    = 'lianamailer_wpf_admin';
+		$section = 'lianamailer_wpf_section';
 
 		register_setting(
-			'lianamailer_wpforms_option_group',
-			'lianamailer_wpforms_options',
+			'lianamailer_wpf_option_group',
+			'lianamailer_wpf_options',
 			array(
 				$this,
-				'lianamailer_wp_forms_sanitize',
+				'lianamailer_wpf_sanitize',
 			)
 		);
 
 		add_settings_section(
 			$section,
 			'',
-			array( $this, 'lianmailer_wp_form_section_info' ),
+			array( $this, 'lianmailer_wpf_section_info' ),
 			$page
 		);
 
 		$inputs = array(
 			// API UserID.
 			array(
-				'name'     => 'lianamailer_wpforms_userid',
+				'name'     => 'lianamailer_wpf_userid',
 				'title'    => 'LianaMailer API UserID',
-				'callback' => array( $this, 'lianamailer_wp_forms_user_id_callback' ),
+				'callback' => array( $this, 'lianamailer_user_id_callback' ),
 				'page'     => $page,
 				'section'  => $section,
 			),
 			// API Secret key.
 			array(
-				'name'     => 'lianamailer_wpforms_secret',
+				'name'     => 'lianamailer_wpf_secret',
 				'title'    => 'LianaMailer API Secret key',
-				'callback' => array( $this, 'lianamailer_wp_forms_secret_key_callback' ),
+				'callback' => array( $this, 'lianamailer_secret_key_callback' ),
 				'page'     => $page,
 				'section'  => $section,
 			),
 			// API URL.
 			array(
-				'name'     => 'lianamailer_wpforms_url',
+				'name'     => 'lianamailer_wpf_url',
 				'title'    => 'LianaMailer API URL',
-				'callback' => array( $this, 'lianamailer_wp_forms_url_callback' ),
+				'callback' => array( $this, 'lianamailer_url_callback' ),
 				'page'     => $page,
 				'section'  => $section,
 			),
 			// API Realm.
 			array(
-				'name'     => 'lianamailer_wpforms_realm',
+				'name'     => 'lianamailer_wpf_realm',
 				'title'    => 'LianaMailer API Realm',
-				'callback' => array( $this, 'lianamailer_wp_forms_realm_callback' ),
+				'callback' => array( $this, 'lianamailer_realm_callback' ),
 				'page'     => $page,
 				'section'  => $section,
 			),
 			// Status check.
 			array(
-				'name'     => 'lianamailer_wpforms_status_check',
+				'name'     => 'lianamailer_wpf_status_check',
 				'title'    => 'LianaMailer Connection Check',
-				'callback' => array( $this, 'lianamailer_wp_forms_connection_check_callback' ),
+				'callback' => array( $this, 'lianamailer_connection_check_callback' ),
 				'page'     => $page,
 				'section'  => $section,
 			),
@@ -208,7 +208,7 @@ class LianaMailerWPForms {
 	 *
 	 * @return string Sanitized string.
 	 */
-	public function lianamailer_wp_forms_sanitize( $input ) {
+	public function lianamailer_wpf_sanitize( $input ) {
 		$sanitary_values = array();
 
 		if ( isset( $input['lianamailer_userid'] ) ) {
@@ -233,7 +233,7 @@ class LianaMailerWPForms {
 	/**
 	 * Empty section info.
 	 */
-	public function lianmailer_wp_form_section_info() {
+	public function lianmailer_wpf_section_info() {
 		// Intentionally empty section here.
 		// Could be used to generate info text.
 	}
@@ -241,40 +241,64 @@ class LianaMailerWPForms {
 	/**
 	 * LianaMailer API URL.
 	 */
-	public function lianamailer_wp_forms_url_callback() {
+	public function lianamailer_url_callback() {
 
 		printf(
 			'<input class="regular-text" type="text" '
-			. 'name="lianamailer_wpforms_options[lianamailer_url]" '
+			. 'name="lianamailer_wpf_options[lianamailer_url]" '
 			. 'id="lianamailer_url" value="%s">',
-			isset( $this->lianamailer_wpforms_options['lianamailer_url'] ) ? esc_attr( $this->lianamailer_wpforms_options['lianamailer_url'] ) : ''
+			isset( $this->lianamailer_wpf_options['lianamailer_url'] ) ? esc_attr( $this->lianamailer_wpf_options['lianamailer_url'] ) : ''
 		);
 	}
 	/**
 	 * LianaMailer API Realm.
 	 */
-	public function lianamailer_wp_forms_realm_callback() {
+	public function lianamailer_realm_callback() {
 		printf(
 			'<input class="regular-text" type="text" '
-			. 'name="lianamailer_wpforms_options[lianamailer_realm]" '
+			. 'name="lianamailer_wpf_options[lianamailer_realm]" '
 			. 'id="lianamailer_realm" value="%s">',
-			isset( $this->lianamailer_wpforms_options['lianamailer_realm'] ) ? esc_attr( $this->lianamailer_wpforms_options['lianamailer_realm'] ) : ''
+			isset( $this->lianamailer_wpf_options['lianamailer_realm'] ) ? esc_attr( $this->lianamailer_wpf_options['lianamailer_realm'] ) : ''
+		);
+	}
+
+	/**
+	 * LianaMailer UserID.
+	 */
+	public function lianamailer_user_id_callback() {
+		printf(
+			'<input class="regular-text" type="text" '
+			. 'name="lianamailer_wpf_options[lianamailer_userid]" '
+			. 'id="lianamailer_userid" value="%s">',
+			isset( $this->lianamailer_wpf_options['lianamailer_userid'] ) ? esc_attr( $this->lianamailer_wpf_options['lianamailer_userid'] ) : ''
+		);
+	}
+
+		/**
+		 * LianaMailer UserID.
+		 */
+	public function lianamailer_secret_key_callback() {
+		printf(
+			'<input class="regular-text" type="text" '
+			. 'name="lianamailer_wpf_options[lianamailer_secret_key]" '
+			. 'id="lianamailer_secret_key" value="%s">',
+			isset( $this->lianamailer_wpf_options['lianamailer_secret_key'] ) ? esc_attr( $this->lianamailer_wpf_options['lianamailer_secret_key'] ) : ''
 		);
 	}
 
 	/**
 	 * LianaMailer Status check.
 	 */
-	public function lianamailer_wp_forms_connection_check_callback() {
+	public function lianamailer_connection_check_callback() {
 
 		$return = '💥Fail';
 
-		if ( ! empty( $this->lianamailer_wpforms_options['lianamailer_userid'] ) || ! empty( $this->lianamailer_wpforms_options['lianamailer_secret_key'] ) || ! empty( $this->lianamailer_wpforms_options['lianamailer_realm'] ) ) {
+		if ( ! empty( $this->lianamailer_wpf_options['lianamailer_userid'] ) || ! empty( $this->lianamailer_wpf_options['lianamailer_secret_key'] ) || ! empty( $this->lianamailer_wpf_options['lianamailer_realm'] ) || ! empty( $this->lianamailer_wpf_options['lianamailer_url'] ) ) {
 			$rest = new Rest(
-				$this->lianamailer_wpforms_options['lianamailer_userid'],
-				$this->lianamailer_wpforms_options['lianamailer_secret_key'],
-				$this->lianamailer_wpforms_options['lianamailer_realm'],
-				$this->lianamailer_wpforms_options['lianamailer_url']
+				$this->lianamailer_wpf_options['lianamailer_userid'],
+				$this->lianamailer_wpf_options['lianamailer_secret_key'],
+				$this->lianamailer_wpf_options['lianamailer_realm'],
+				$this->lianamailer_wpf_options['lianamailer_url']
 			);
 
 			$status = $rest->get_status();
@@ -286,31 +310,7 @@ class LianaMailerWPForms {
 		echo esc_html( $return );
 
 	}
-
-	/**
-	 * LianaMailer UserID.
-	 */
-	public function lianamailer_wp_forms_user_id_callback() {
-		printf(
-			'<input class="regular-text" type="text" '
-			. 'name="lianamailer_wpforms_options[lianamailer_userid]" '
-			. 'id="lianamailer_userid" value="%s">',
-			isset( $this->lianamailer_wpforms_options['lianamailer_userid'] ) ? esc_attr( $this->lianamailer_wpforms_options['lianamailer_userid'] ) : ''
-		);
-	}
-
-		/**
-		 * LianaMailer UserID.
-		 */
-	public function lianamailer_wp_forms_secret_key_callback() {
-		printf(
-			'<input class="regular-text" type="text" '
-			. 'name="lianamailer_wpforms_options[lianamailer_secret_key]" '
-			. 'id="lianamailer_secret_key" value="%s">',
-			isset( $this->lianamailer_wpforms_options['lianamailer_secret_key'] ) ? esc_attr( $this->lianamailer_wpforms_options['lianamailer_secret_key'] ) : ''
-		);
-	}
 }
 if ( is_admin() ) {
-	$lianamailer_wp_forms = new LianaMailerWPForms();
+	$lianamailer_wpf = new LianaMailer_WPF();
 }

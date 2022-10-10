@@ -9,7 +9,7 @@
  * @link     https://www.lianatech.com
  */
 
-namespace WPForms_LianaMailer;
+namespace WPF_LianaMailer;
 
 /**
  * LianaMailer connection class for WPForms plugin
@@ -55,12 +55,31 @@ class LianaMailerConnection {
 	 */
 	public function __construct() {
 
-		$lianamailer_settings = get_option( 'lianamailer_wpforms_options' );
-		$this->rest           = new Rest(
-			$lianamailer_settings['lianamailer_userid'],
-			$lianamailer_settings['lianamailer_secret_key'],
-			$lianamailer_settings['lianamailer_realm'],
-			$lianamailer_settings['lianamailer_url']
+		$lianamailer_settings = get_option( 'lianamailer_wpf_options' );
+
+		$user_id    = null;
+		$secret_key = null;
+		$realm      = null;
+		$url        = null;
+
+		if ( ! empty( $lianamailer_settings['lianamailer_userid'] ) ) {
+			$user_id = $lianamailer_settings['lianamailer_userid'];
+		}
+		if ( ! empty( $lianamailer_settings['lianamailer_secret_key'] ) ) {
+			$secret_key = $lianamailer_settings['lianamailer_secret_key'];
+		}
+		if ( ! empty( $lianamailer_settings['lianamailer_realm'] ) ) {
+			$realm = $lianamailer_settings['lianamailer_realm'];
+		}
+		if ( ! empty( $lianamailer_settings['lianamailer_url'] ) ) {
+			$url = $lianamailer_settings['lianamailer_url'];
+		}
+
+		$this->rest = new Rest(
+			$user_id,
+			$secret_key,
+			$realm,
+			$url
 		);
 	}
 
@@ -97,13 +116,19 @@ class LianaMailerConnection {
 			$account_sites = $this->rest->call(
 				'sites',
 				array(
-					'properties'    => true,
-					'lists'         => true,
-					'layout'        => false,
-					'marketing'     => false,
-					'parents'       => false,
-					'children'      => false,
-					'authorization' => false,
+					array(
+						'properties'    => true,
+						'lists'         => true,
+						'layout'        => false,
+						'marketing'     => false,
+						'parents'       => false,
+						'children'      => false,
+						'authorization' => false,
+					),
+					// If account does not have multiple list subscription enabled, this ensures default list is returned.
+					array(
+						'all_lists' => true,
+					),
 				)
 			);
 		} catch ( \Exception $e ) {

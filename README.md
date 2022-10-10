@@ -9,5 +9,5 @@ This plugin provides necessary functions to integrate WPForms with LianaMailer.
 ## Oneliner to create installable plugin from the repo directory
 
 ```
-zip -r lianamailer-wpforms-version.zip lianamailer-wpforms -x "lianamailer-wpforms/.*"
+zip -r lianamailer-wpf.zip lianamailer-wpf -x "lianamailer-wpf/.*"
 ```

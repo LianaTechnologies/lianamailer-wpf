@@ -9,7 +9,7 @@
  * @link     https://www.lianatech.com
  */
 
-namespace WPForms_LianaMailer;
+namespace WPF_LianaMailer;
 
 /**
  * LianaMailer custom field class for WPForms plugin
@@ -20,7 +20,7 @@ namespace WPForms_LianaMailer;
  * @license  https://www.gnu.org/licenses/gpl-3.0-standalone.html GPL-3.0-or-later
  * @link     https://www.lianatech.com
  */
-class WPForms_Field_LianaMailer extends \WPForms_Field {
+class WPF_Field_LianaMailer extends \WPForms_Field {
 
 	/**
 	 * Form instance
@@ -61,7 +61,9 @@ class WPForms_Field_LianaMailer extends \WPForms_Field {
 		$this->icon  = 'lianamailer';
 		$this->order = 999;
 
-		$consent_description = '';
+		$consent_description       = '';
+		$this->is_connection_valid = apply_filters( 'wpf_get_lianamailer_connection_status', $this );
+
 		if ( is_admin() ) {
 			$form_id             = null;
 			$consent_description = null;
@@ -81,9 +83,8 @@ class WPForms_Field_LianaMailer extends \WPForms_Field {
 					$form = wpforms_decode( $form->post_content );
 
 					$this->form_instance          = $form;
-					$this->is_connection_valid    = apply_filters( 'wpform_get_lianamailer_connection_status', $this );
-					$this->site_data              = apply_filters( 'wpform_get_lianamailer_site_data', $this, $form );
-					$this->lianamailer_properties = apply_filters( 'wpform_get_lianamailer_properties', $this, $form );
+					$this->site_data              = apply_filters( 'wpf_get_lianamailer_site_data', $this, $form );
+					$this->lianamailer_properties = apply_filters( 'wpf_get_lianamailer_properties', $this, $form );
 				}
 
 				if ( ! empty( $this->site_data ) ) {
@@ -222,7 +223,7 @@ class WPForms_Field_LianaMailer extends \WPForms_Field {
 
 			$html = '';
 			if ( ! $this->is_connection_valid ) {
-				$html = '<div class="lianamailer-error rest-api-error"><p>REST API error. Ensure <a href="' . ( isset( $_SERVER['PHP_SELF'] ) ? sanitize_text_field( wp_unslash( $_SERVER['PHP_SELF'] ) ) : '' ) . '?page=lianamailerwpforms" target="_blank">API settings</a> are propertly set</p></div>';
+				$html = '<div class="lianamailer-error rest-api-error"><p>REST API error. Ensure <a href="' . ( isset( $_SERVER['PHP_SELF'] ) ? sanitize_text_field( wp_unslash( $_SERVER['PHP_SELF'] ) ) : '' ) . '?page=lianamailerwpf" target="_blank">API settings</a> are propertly set</p></div>';
 			} elseif ( empty( $this->site_data ) ) {
 				$html = '<div class="lianamailer-error rest-api-error"><p>LianaMailer site is not selected. Check settings</p></div>';
 			}
@@ -353,6 +354,7 @@ class WPForms_Field_LianaMailer extends \WPForms_Field {
 		if ( empty( $this->lianamailer_properties ) ) {
 			$html .= '<div class="lianamailer-error no-properties-found">No LianaMailer properties found</div>';
 		}
+
 		foreach ( $this->lianamailer_properties as $property ) {
 			$html .= '<div class="property">';
 
@@ -475,7 +477,7 @@ class WPForms_Field_LianaMailer extends \WPForms_Field {
 		// Print error messages into preview.
 		// If REST API connection is not valid.
 		if ( ! $this->is_connection_valid ) {
-			$html .= '<div class="lianamailer-error rest-api-error">REST API error. Ensure <a href="' . ( isset( $_SERVER['PHP_SELF'] ) ? sanitize_text_field( wp_unslash( $_SERVER['PHP_SELF'] ) ) : '' ) . '?page=lianamailerwpforms" target="_blank">API settings</a> are propertly set</div>';
+			$html .= '<div class="lianamailer-error rest-api-error">REST API error. Ensure <a href="' . ( isset( $_SERVER['PHP_SELF'] ) ? sanitize_text_field( wp_unslash( $_SERVER['PHP_SELF'] ) ) : '' ) . '?page=lianamailerwpf" target="_blank">API settings</a> are propertly set</div>';
 		}
 		// Plugin is disabled on current form.
 		if ( ! $is_plugin_enabled ) {

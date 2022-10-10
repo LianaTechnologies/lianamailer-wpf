@@ -9,7 +9,7 @@
  * @link     https://www.lianatech.com
  */
 
-namespace WPForms_LianaMailer;
+namespace WPF_LianaMailer;
 
 /**
  * LianaMailer - WPForms plugin class
@@ -67,9 +67,9 @@ class LianaMailerPlugin {
 		add_action( 'wp_ajax_getSiteDataForWPFormSettings', array( $this, 'get_site_data_for_settings' ), 10, 1 );
 
 		// Filter integration settings for custom field options.
-		add_filter( 'wpform_get_lianamailer_connection_status', array( $this, 'wpform_get_lianamailer_connection_status' ), 10, 1 );
-		add_filter( 'wpform_get_lianamailer_site_data', array( $this, 'wpform_get_lianamailer_site_data' ), 10, 2 );
-		add_filter( 'wpform_get_lianamailer_properties', array( $this, 'wpform_get_lianamailer_properties' ), 10, 2 );
+		add_filter( 'wpf_get_lianamailer_connection_status', array( $this, 'wpf_get_lianamailer_connection_status' ), 10, 1 );
+		add_filter( 'wpf_get_lianamailer_site_data', array( $this, 'wpf_get_lianamailer_site_data' ), 10, 2 );
+		add_filter( 'wpf_get_lianamailer_properties', array( $this, 'wpf_get_lianamailer_properties' ), 10, 2 );
 
 		// Filter for form builder save.
 		add_filter( 'wpforms_builder_save_form', array( $this, 'after_form_save' ), 20, 2 );
@@ -161,7 +161,7 @@ class LianaMailerPlugin {
 	 *
 	 * @return array Site data
 	 */
-	public function wpform_get_lianamailer_site_data( $field, $form ) {
+	public function wpf_get_lianamailer_site_data( $field, $form ) {
 
 		$selected_site = null;
 		if ( isset( $form['lianamailer_settings']['lianamailer_site'] ) && $form['lianamailer_settings']['lianamailer_site'] ) {
@@ -180,7 +180,7 @@ class LianaMailerPlugin {
 	 *
 	 * @return array LianaMailer site properties
 	 */
-	public function wpform_get_lianamailer_properties( $field, $form ) {
+	public function wpf_get_lianamailer_properties( $field, $form ) {
 
 		$selected_site   = null;
 		$site_properties = array();
@@ -203,8 +203,8 @@ class LianaMailerPlugin {
 	 *
 	 * @return array LianaMailer site properties
 	 */
-	public function wpform_get_lianamailer_connection_status( $field ) {
-		return self::$lianamailer_connection->get_status();
+	public function wpf_get_lianamailer_connection_status( $field ) {
+		return (self::$lianamailer_connection->get_status() ? true : false);
 	}
 
 	/**
@@ -233,7 +233,10 @@ class LianaMailerPlugin {
 			return;
 		}
 
-		$account_sites    = self::$lianamailer_connection->get_account_sites();
+		$account_sites = self::$lianamailer_connection->get_account_sites();
+		if ( empty( $account_sites ) ) {
+			$account_sites = array();
+		}
 		$disable_settings = false;
 		// if LianaMailer sites could not fetch or theres no any, print error message.
 		if ( empty( $account_sites ) ) {
@@ -369,11 +372,11 @@ class LianaMailerPlugin {
 	}
 
 	/**
-	 * Register custom WPForms_Field_LianaMailer field
+	 * Register custom WPF_Field_LianaMailer field
 	 */
 	public function register_field() {
-		require_once 'class-wpforms-field-lianamailer.php';
-		new WPForms_Field_LianaMailer();
+		require_once 'class-wpf-field-lianamailer.php';
+		new WPF_Field_LianaMailer();
 	}
 
 	/**
@@ -420,6 +423,14 @@ class LianaMailerPlugin {
 
 		$form_fields  = $form_data['fields'];
 		$property_map = $this->get_lianamailer_property_map( $form_fields );
+
+		$lianamailer_field    = $this->get_lianamailer_field_from_form( $form_data );
+		$lianamailer_field_id = $lianamailer_field['id'];
+
+		// If LianaMailer field was not posted, bail out.
+		if ( ! array_key_exists( $lianamailer_field_id, $entry['fields'] ) || empty( $entry['fields'][ $lianamailer_field_id ] ) ) {
+			return;
+		}
 
 		$field_map_email = ( array_key_exists( 'email', $property_map ) && ! empty( $property_map['email'] ) ? intval( $property_map['email'] ) : null );
 		$field_map_sms   = ( array_key_exists( 'sms', $property_map ) && ! empty( $property_map['sms'] ) ? intval( $property_map['sms'] ) : null );
@@ -502,6 +513,32 @@ class LianaMailerPlugin {
 		} catch ( \Exception $e ) {
 			$failure_reason = $e->getMessage();
 		}
+	}
+
+	/**
+	 * Gets LianaMailer field object from form fields.
+	 *
+	 * @param object $form_data Form object.
+	 *
+	 * @return object $lianamailer_field LianaMailer field object.
+	 */
+	private function get_lianamailer_field_from_form( $form_data ) {
+
+		if ( ! isset( $form_data['fields'] ) ) {
+			return array();
+		}
+
+		$fields            = $form_data['fields'];
+		$lianamailer_field = array();
+		// Fetch all non LianaMailer properties for settings.
+		foreach ( $fields as $field ) {
+			if ( 'lianamailer' !== $field['type'] ) {
+				continue;
+			}
+			$lianamailer_field = $field;
+		}
+
+		return $lianamailer_field;
 	}
 
 	/**
@@ -628,14 +665,14 @@ class LianaMailerPlugin {
 	 * Enqueue plugin CSS and JS
 	 */
 	public function add_lianamailer_plugin_scripts() {
-		wp_enqueue_style( 'lianamailer-wpforms-admin-css', dirname( plugin_dir_url( __FILE__ ) ) . '/css/admin.css', array(), LMWP_FORMS_VERSION );
+		wp_enqueue_style( 'lianamailer-wpf-admin-css', dirname( plugin_dir_url( __FILE__ ) ) . '/css/admin.css', array(), LMWP_FORMS_VERSION );
 
 		$js_vars = array(
 			'url' => admin_url( 'admin-ajax.php' ),
 		);
-		wp_register_script( 'lianamailer-wpforms-plugin', dirname( plugin_dir_url( __FILE__ ) ) . '/js/lianamailer-plugin.js', array( 'jquery' ), LMWP_FORMS_VERSION, false );
-		wp_localize_script( 'lianamailer-wpforms-plugin', 'lianaMailerConnection', $js_vars );
-		wp_enqueue_script( 'lianamailer-wpforms-plugin' );
+		wp_register_script( 'lianamailer-wpf-plugin', dirname( plugin_dir_url( __FILE__ ) ) . '/js/lianamailer-plugin.js', array( 'jquery' ), LMWP_FORMS_VERSION, false );
+		wp_localize_script( 'lianamailer-wpf-plugin', 'lianaMailerConnection', $js_vars );
+		wp_enqueue_script( 'lianamailer-wpf-plugin' );
 	}
 
 	/**

@@ -9,7 +9,7 @@
  * @link     https://www.lianatech.com
  */
 
-namespace WPForms_LianaMailer;
+namespace WPF_LianaMailer;
 
 /**
  * REST class for WPForms plugin
