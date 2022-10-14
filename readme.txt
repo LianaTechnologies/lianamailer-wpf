@@ -1,4 +1,4 @@
-=== LianaMailer for WPForms ===
+=== LianaMailer WPF ===
 Contributors: lianatechnologies, jaakkoperoliana, timopohjanvirtaliana
 Tags: newsletter, automation
 Requires at least: 5.8

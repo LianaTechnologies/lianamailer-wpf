@@ -496,7 +496,7 @@ class LianaMailerPlugin {
 				if ( ! is_null( $recipient ) && isset( $recipient['recipient']['enabled'] ) && false === $recipient['recipient']['enabled'] && $email ) {
 					self::$lianamailer_connection->reactivate_recipient( $email, $auto_confirm );
 				}
-				self::$lianamailer_connection->create_and_join_recipient( $email, $sms, $list_id, $auto_confirm );
+				self::$lianamailer_connection->create_and_join_recipient( $recipient, $email, $sms, $list_id, $auto_confirm );
 
 				$consent_key = array_search( $consent_id, array_column( self::$site_data['consents'], 'consent_id' ), true );
 				if ( false !== $consent_key ) {

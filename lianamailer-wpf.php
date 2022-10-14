@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       LianaMailer for WPForms
+ * Plugin Name:       LianaMailer WPF
  * Description:       LianaMailer plugin for WPForms.
  * Version:           1.15
  * Requires at least: 5.2
