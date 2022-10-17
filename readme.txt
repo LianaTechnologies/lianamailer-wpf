@@ -42,4 +42,4 @@ REST API documentation of LianaMailer product is available at [our support site]
 
 == Changelog ==
 
-= 1.0.15 2022-10-10 = Initial public release
+= 1.15 2022-10-10 = Initial public release

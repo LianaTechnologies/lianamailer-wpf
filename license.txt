@@ -1,4 +1,4 @@
-LianaMailer WPForms - LianaMailer integration for WPForms WordPress -plugin
+LianaMailer for WPForms - LianaMailer integration for WPForms WordPress -plugin
 
 Copyright 2021, 2022 by Liana Technologies Oy.
 
