@@ -113,6 +113,7 @@ class LianaMailerPlugin {
 
 					if ( $consent_label ) {
 						$field['choices'][0]['label'] = $consent_label;
+						$field['choices'][0]['value'] = '1';
 					}
 					break;
 				}
@@ -441,17 +442,23 @@ class LianaMailerPlugin {
 		$posted_data = array();
 
 		/**
-		 * Loop posted fields
+		 * Loop fields from entry
 		 * Search mapped email and SMS fields
 		 */
-		foreach ( $fields as $field ) {
-			$value                       = $field['value'];
-			$posted_data[ $field['id'] ] = $value;
+		$entry_fields = $entry['fields'];
+		foreach ( $entry_fields as $field_id => $value ) {
 
-			if ( $field['id'] === $field_map_email ) {
+			// Checkbox values are in array.
+			if ( is_array( $value ) ) {
+				$value = implode(', ', $value);
+			}
+
+			$posted_data[ $field_id ] = $value;
+
+			if ( $field_id === $field_map_email ) {
 				$email = $value;
 			}
-			if ( $field['id'] === $field_map_sms ) {
+			if ( $field_id === $field_map_sms ) {
 				$sms = $value;
 			}
 		}

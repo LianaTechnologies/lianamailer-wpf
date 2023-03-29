@@ -2,10 +2,10 @@
 /**
  * Plugin Name:       LianaMailer WPF
  * Description:       LianaMailer plugin for WPForms.
- * Version:           1.15
+ * Version:           1.16
  * Requires at least: 5.2
  * Requires PHP:      7.4
- * Author:            Liana Technologies
+ * Author:            Liana Technologies Oy
  * Author URI:        https://www.lianatech.com
  * License:           GPL-3.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-3.0-standalone.html
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LMWP_FORMS_VERSION', '1.15' );
+define( 'LMWP_FORMS_VERSION', '1.16' );
 
 add_action( 'plugins_loaded', '\WPF_LianaMailer\plugins_loaded' );
 

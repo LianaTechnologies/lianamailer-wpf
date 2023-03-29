@@ -239,15 +239,19 @@ class WPF_Field_LianaMailer extends \WPForms_Field {
 			}
 			if ( $lianamailer_field ) {
 				$field_id = $lianamailer_field['id'];
-				// Print property mappings.
-				foreach ( $lianamailer_field['lianamailer_properties'] as $lm_field => $form_field ) {
-					$html .= '<input type="hidden" name="fields[' . $field_id . '][lianamailer_properties][' . $lm_field . ']" value="' . $form_field . '" />';
+				if ( isset( $lianamailer_field['lianamailer_properties'] ) ) {
+					// Print property mappings.
+					foreach ( $lianamailer_field['lianamailer_properties'] as $lm_field => $form_field ) {
+						$html .= '<input type="hidden" name="fields[' . $field_id . '][lianamailer_properties][' . $lm_field . ']" value="' . $form_field . '" />';
+					}
 				}
-				// Print consent label, value and default value.
-				foreach ( $lianamailer_field['choices'] as $key => $choice_data ) {
-					$html .= '<input type="hidden" name="fields[' . $field_id . '][choices][' . $key . '][label]" value="' . htmlspecialchars( $choice_data['label'] ) . '" />';
-					$html .= '<input type="hidden" name="fields[' . $field_id . '][choices][' . $key . '][value]" value="' . $choice_data['value'] . '" />';
-					$html .= '<input type="hidden" name="fields[' . $field_id . '][choices][' . $key . '][default]" value="' . $choice_data['default'] . '" />';
+				if ( isset( $lianamailer_field['choices'] ) ) {
+					// Print consent label, value and default value.
+					foreach ( $lianamailer_field['choices'] as $key => $choice_data ) {
+						$html .= '<input type="hidden" name="fields[' . $field_id . '][choices][' . $key . '][label]" value="' . htmlspecialchars( $choice_data['label'] ) . '" />';
+						$html .= '<input type="hidden" name="fields[' . $field_id . '][choices][' . $key . '][value]" value="' . $choice_data['value'] . '" />';
+						$html .= '<input type="hidden" name="fields[' . $field_id . '][choices][' . $key . '][default]" value="' . $choice_data['default'] . '" />';
+					}
 				}
 			}
 
