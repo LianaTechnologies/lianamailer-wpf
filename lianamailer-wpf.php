@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       LianaMailer for WPForms
  * Description:       LianaMailer plugin for WPForms.
- * Version:           1.16
+ * Version:           1.2
  * Requires at least: 5.2
  * Requires PHP:      7.4
  * Author:            Liana Technologies Oy
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LMWP_FORMS_VERSION', '1.16' );
+define( 'LMWP_FORMS_VERSION', '1.2' );
 
 add_action( 'plugins_loaded', '\WPF_LianaMailer\plugins_loaded' );
 

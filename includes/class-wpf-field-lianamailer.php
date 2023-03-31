@@ -538,15 +538,14 @@ class WPF_Field_LianaMailer extends \WPForms_Field {
 	 *
 	 * @since 1.0.0
 	 * @param array $field Field data.
-	 * @param array $field_atts Field attributes.
+	 * @param array $field_atts Field attributes (deprecated).
 	 * @param array $form_data Form data.
 	 */
 	public function field_display( $field, $field_atts, $form_data ) {
 
 		// Setup and sanitize the necessary data.
 		$field_required = ! empty( $field['required'] ) ? ' required' : '';
-		$field_class    = implode( ' ', array_map( 'sanitize_html_class', $field_atts['input_class'] ) );
-		$field_id       = implode( ' ', array_map( 'sanitize_html_class', $field_atts['input_id'] ) );
+		$container      = $field['properties']['container'];
 		$form_id        = $form_data['id'];
 		$choices        = $field['choices'];
 
@@ -561,7 +560,10 @@ class WPF_Field_LianaMailer extends \WPForms_Field {
 
 		$html = '';
 		// List.
-		$html .= sprintf( '<ul id="%s" class="%s">', $field_id, $field_class );
+		$html .= sprintf(
+			'<ul %s>',
+			wpforms_html_attributes( $container['id'], $container['class'], $container['data'], $container['attr'] )
+		);
 
 		foreach ( $choices as $key => $choice ) {
 			// If plugin is not enabled or consent is not set, select checkbox by default.
