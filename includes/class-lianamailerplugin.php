@@ -450,7 +450,7 @@ class LianaMailerPlugin {
 
 			// Checkbox values are in array.
 			if ( is_array( $value ) ) {
-				$value = implode( ', ' ,$value );
+				$value = implode( ', ', $value );
 			}
 
 			$posted_data[ $field_id ] = $value;
