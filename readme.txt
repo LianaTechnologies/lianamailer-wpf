@@ -47,7 +47,7 @@ REST API documentation of LianaMailer product is available at [our support site]
 * **Fixed:** Support for WPForms 1.8.1.1 version.
 * **Fixed:** Documentation URLs
 
-= 1.0.15 2022-10-10 = Initial public release
+= 1.15 2022-10-10 = Initial public release
 
 == Upgrade Notice ==
 
