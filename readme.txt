@@ -42,7 +42,7 @@ REST API documentation of LianaMailer product is available at [our support site]
 
 == Changelog ==
 
-= 1.2 2023-03-31 =
+= 1.20 2023-03-31 =
 * **Added feature:** Support for multivalued fields (eg. checkboxes) to map in LianaMailer.
 * **Fixed:** Support for WPForms 1.8.1.1 version.
 * **Fixed:** Documentation URLs
@@ -51,5 +51,5 @@ REST API documentation of LianaMailer product is available at [our support site]
 
 == Upgrade Notice ==
 
-= 1.2 =
+= 1.20 =
 Support for WPForms 1.8.1.1 and WordPress 6.2 versions.
