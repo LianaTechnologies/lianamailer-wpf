@@ -255,6 +255,9 @@ class LianaMailerPlugin {
 		$consent_list_choices = array( '' => 'Choose' );
 
 		foreach ( $account_sites as $account_site ) {
+			if ( $account_site['redirect'] || $account_site['replaced_by'] ) {
+				continue;
+			}
 			$site_choices[ $account_site['domain'] ] = $account_site['domain'];
 		}
 
