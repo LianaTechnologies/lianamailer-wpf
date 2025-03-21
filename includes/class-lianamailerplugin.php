@@ -396,8 +396,8 @@ class LianaMailerPlugin {
 	public function do_newsletter_subscription( $fields, $entry, $form_data ) {
 		$lianamailer_settings = $form_data['lianamailer_settings'];
 		$is_plugin_enabled    = $lianamailer_settings['lianamailer_enabled'] ?? false;
-		$list_id              = intval( $lianamailer_settings['lianamailer_mailing_list'] ) ?? null;
-		$consent_id           = intval( $lianamailer_settings['lianamailer_consent'] ) ?? null;
+		$list_id              = intval( $lianamailer_settings['lianamailer_mailing_list'] ?? null );
+		$consent_id           = intval( $lianamailer_settings['lianamailer_consent'] ?? null );
 		$selected_site        = $lianamailer_settings['lianamailer_site'] ?? null;
 
 		// works only in public form and check if plugin is enablen on current form.
