@@ -1,10 +1,10 @@
 === LianaMailer for WPForms ===
-Contributors: lianatechnologies, jaakkoperoliana, timopohjanvirtaliana
+Contributors: lianatechnologies, jaakkoperoliana, timopohjanvirtaliana, samisiuvatti
 Tags: newsletter, automation
 Requires at least: 5.8
-Tested up to: 6.6.2
+Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.20.2
+Stable tag: 1.20.3
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 
@@ -52,6 +52,9 @@ Yes, you can! Join in on our [GitHub repository](https://github.com/LianaTechnol
 REST API documentation of LianaMailer product is available at [our support site](https://support.lianatech.com/hc/en-us/articles/5339910408989-LianaMailer-REST-API).
 
 == Changelog ==
+
+= 1.20.3 2025-05-30 =
+* **Change:** Send subscriber's IP to LianaMailer
 
 = 1.20.2 2025-03-21 =
 * **Fixed:** Minor PHP warnings
