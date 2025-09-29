@@ -379,6 +379,9 @@ class LianaMailerPlugin {
 	 * Register custom WPF_Field_LianaMailer field
 	 */
 	public function register_field() {
+		if ( ! class_exists( '\WPForms_Field' ) ) {
+			return;
+		}
 		require_once 'class-wpf-field-lianamailer.php';
 		new WPF_Field_LianaMailer();
 	}
