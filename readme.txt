@@ -1,14 +1,22 @@
 === LianaMailer for WPForms ===
 Contributors: lianatechnologies, jaakkoperoliana, timopohjanvirtaliana, samisiuvatti
 Tags: newsletter, automation
-Requires at least: 5.8
-Tested up to: 6.8
-Requires PHP: 7.4
-Stable tag: 1.20.4
+Requires at least: 6.5
+Tested up to: 6.9
+Requires PHP: 8.0
+Stable tag: 1.20.5
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 
 == Description ==
+
+== Deprecation notice ==
+
+This plugin has been deprecated and merged into [Liana with GrowthStack](https://wordpress.org/plugins/liana-with-growthstack/).
+
+This plugin will no longer receive updates.
+
+== LianaMailer for WPForms ==
 
 LianaMailer for WPForms is an integration plugin which integrates LianaMailer into [WPForms](https://wordpress.org/plugins/wpforms-lite/). It enables you to have newsletter opt-ins automatically exported from WPForms form to LianaMailer email marketing solution.
 
